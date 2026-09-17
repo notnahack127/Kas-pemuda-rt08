@@ -38,9 +38,13 @@
 
 <div id="app" class="hidden">
   <header class="topbar">
-    <div><h1>Kas Warga RT 08</h1><span id="userInfo" class="badge"></span></div>
+    <div>
+      <h1>Kas Warga RT 08</h1>
+      <span id="userInfo" class="badge"></span>
+    </div>
     <button id="logoutBtn" class="btn danger">Keluar</button>
   </header>
+
   <nav class="tabs">
     <button class="tab active" data-tab="dashboard">Dashboard</button>
     <button class="tab" data-tab="kas">Kas</button>
@@ -58,35 +62,98 @@
         <div class="card"><span>Kas Keluar</span><strong id="keluar">Rp0</strong></div>
         <div class="card"><span>Total Warga</span><strong id="jumlahWarga">0</strong></div>
       </div>
-      <div class="panel"><h3>Transaksi Terbaru</h3><div id="recentKas"></div></div>
+      <div class="panel">
+        <h3>Transaksi Terbaru</h3>
+        <div id="recentKas"></div>
+      </div>
     </section>
 
     <section id="kas" class="tab-content">
-      <div class="section-head"><h2>Kas Masuk / Keluar</h2><button id="addKas" class="btn primary admin-only">+ Tambah</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="kasBody"></tbody></table></div>
+      <div class="section-head">
+        <h2>Kas Masuk / Keluar</h2>
+        <button id="addKas" class="btn primary admin-only">+ Tambah</button>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Jenis</th>
+              <th>Keterangan</th>
+              <th>Nominal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="kasBody"></tbody>
+        </table>
+      </div>
     </section>
 
     <section id="warga" class="tab-content">
-      <div class="section-head"><h2>Daftar Warga</h2><button id="addWarga" class="btn primary admin-only">+ Tambah</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Nama</th><th>Alamat</th><th>HP</th><th>Total Cicilan</th><th>Sudah Dibayar</th><th>Sisa Cicilan</th><th>Aksi</th></tr></thead><tbody id="wargaBody"></tbody></table></div>
+      <div class="section-head">
+        <h2>Daftar Warga</h2>
+        <button id="addWarga" class="btn primary admin-only">+ Tambah</button>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Alamat</th>
+              <th>HP</th>
+              <th>Total Cicilan</th>
+              <th>Sudah Dibayar</th>
+              <th>Sisa Cicilan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="wargaBody"></tbody>
+        </table>
+      </div>
     </section>
 
     <section id="cicilan" class="tab-content">
-      <div class="section-head"><h2>Warga yang Sudah Cicil</h2><button id="addCicilan" class="btn primary admin-only">+ Tambah</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Tanggal</th><th>Warga</th><th>Ke</th><th>Nominal</th><th>Keterangan</th><th>Aksi</th></tr></thead><tbody id="cicilanBody"></tbody></table></div>
+      <div class="section-head">
+        <h2>Warga yang Sudah Cicil</h2>
+        <button id="addCicilan" class="btn primary admin-only">+ Tambah</button>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Warga</th>
+              <th>Ke</th>
+              <th>Nominal</th>
+              <th>Keterangan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="cicilanBody"></tbody>
+        </table>
+      </div>
     </section>
 
     <section id="laporan" class="tab-content">
       <h2>Laporan</h2>
-      <div class="panel"><button id="printBtn" class="btn primary">📄 Cetak / Simpan PDF</button><div id="report" class="report"></div></div>
+      <div class="panel">
+        <button id="printBtn" class="btn primary">📄 Cetak / Simpan PDF</button>
+        <div id="report" class="report"></div>
+      </div>
     </section>
   </main>
 </div>
 
-<div id="modal" class="modal hidden"><div class="modal-card"><button id="closeModal" class="modal-close">×</button><h2 id="modalTitle"></h2><form id="modalForm"></form></div></div>
+<div id="modal" class="modal hidden">
+  <div class="modal-card">
+    <button id="closeModal" class="modal-close">×</button>
+    <h2 id="modalTitle"></h2>
+    <form id="modalForm"></form>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script src="script.js"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>
