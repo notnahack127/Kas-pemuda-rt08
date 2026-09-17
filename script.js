@@ -59,7 +59,12 @@ function renderKas(d){
  $("kasBody").innerHTML=d.kas.map(x=>`<tr><td>${x.tanggal}</td><td>${x.jenis==="masuk"?"Masuk":"Keluar"}</td><td>${esc(x.keterangan)}</td><td class="${x.jenis==="masuk"?"in":"out"}">${rupiah(x.nominal)}</td><td>${adminActions("kas",x.id)}</td></tr>`).join("");
 }
 function renderWarga(d){
- $("wargaBody").innerHTML=d.warga.map(x=>`<tr><td>${esc(x.nama)}</td><td>${esc(x.alamat||"")}</td><td>${esc(x.hp||"")}</td><td>${adminActions("warga",x.id)}</td></tr>`).join("");
+ $("wargaBody").innerHTML=d.warga.map(x=>{
+  const total=Number(x.total_cicilan)||0;
+  const dibayar=d.cicilan.filter(c=>c.warga_id===x.id).reduce((s,c)=>s+Number(c.nominal||0),0);
+  const sisa=Math.max(total-dibayar,0);
+  return `<tr><td>${esc(x.nama)}</td><td>${esc(x.alamat||"")}</td><td>${esc(x.hp||"")}</td><td>${rupiah(total)}</td><td>${rupiah(dibayar)}</td><td>${rupiah(sisa)}</td><td>${adminActions("warga",x.id)}</td></tr>`;
+ }).join("");
 }
 function renderCicilan(d){
  $("cicilanBody").innerHTML=d.cicilan.map(x=>{let w=d.warga.find(z=>z.id===x.warga_id);return `<tr><td>${x.tanggal}</td><td>${esc(w?.nama||"Warga")}</td><td>${x.ke}</td><td>${rupiah(x.nominal)}</td><td>${esc(x.keterangan||"")}</td><td>${adminActions("cicilan",x.id)}</td></tr>`}).join("");
@@ -80,8 +85,8 @@ async function openKas(id=null){
 }
 async function openWarga(id=null){
  let x=id?(await sb.from("profiles").select("*").eq("id",id).single()).data:{};
- openModal(id?"Edit Warga":"Tambah Warga",`<label>Nama</label><input name="nama" value="${esc(x?.nama||"")}" required><label>Alamat</label><input name="alamat" value="${esc(x?.alamat||"")}"><label>No. HP</label><input name="hp" value="${esc(x?.hp||"")}"><div class="form-actions"><button type="button" class="btn" onclick="closeModal()">Batal</button><button class="btn primary">Simpan</button></div>`,async f=>{
- const row={nama:f.get("nama"),alamat:f.get("alamat"),hp:f.get("hp")};const r=id?await sb.from("profiles").update(row).eq("id",id):await sb.from("profiles").insert({...row,id:crypto.randomUUID()});
+ openModal(id?"Edit Warga":"Tambah Warga",`<label>Nama</label><input name="nama" value="${esc(x?.nama||"")}" required><label>Alamat</label><input name="alamat" value="${esc(x?.alamat||"")}"><label>No. HP</label><input name="hp" value="${esc(x?.hp||"")}"><label>Total Cicilan</label><input name="total_cicilan" type="number" min="0" value="${x?.total_cicilan||0}" required><div class="form-actions"><button type="button" class="btn" onclick="closeModal()">Batal</button><button class="btn primary">Simpan</button></div>`,async f=>{
+ const row={nama:f.get("nama"),alamat:f.get("alamat"),hp:f.get("hp"),total_cicilan:Number(f.get("total_cicilan")||0)};const r=id?await sb.from("profiles").update(row).eq("id",id):await sb.from("profiles").insert({...row,id:crypto.randomUUID()});
  if(r.error)alert(r.error.message);else{closeModal();renderAll()}});
 }
 async function openCicilan(id=null){
